@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-6">
+    <h1 class="text-2xl font-semibold mb-4">Search Results for "{{ query }}"</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {% for data in data %}
+        <div class="bg-white shadow-md rounded-md overflow-hidden cursor-pointer" onclick="openVideoModal('{{ data.video_url }}')">
+            <img class="w-full" src="{{ data.thumbnail_url }}" alt="Video Thumbnail">
+            <div class="p-4">
+                <h3 class="text-lg font-semibold">{{ data.title }}</h3>
+                <p class="text-sm text-gray-600">{{ data.views }} • {{ data.upload_date }}</p>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-gray-600">No results found.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Include your video modal script here if needed -->
+
+<div id="videoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-4xl">
+        <div class="flex justify-end p-2">
+            <button onclick="closeVideoModal()" class="text-gray-400 hover:text-gray-600">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="p-4">
+            <iframe id="videoPlayer" class="w-full h-60" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openVideoModal(videoUrl) {
+        // Extract the video ID from the URL
+        var videoId = videoUrl.split('v=')[1];
+        var ampersandPosition = videoId.indexOf('&');
+        if (ampersandPosition != -1) {
+            videoId = videoId.substring(0, ampersandPosition);
+        }
+
+        // Set the src attribute of the iframe to the YouTube embed URL
+        var videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.src = `https://www.youtube.com/embed/${videoId}`;
+
+        // Show the modal
+        document.getElementById('videoModal').classList.remove('hidden');
+    }
+
+    function closeVideoModal() {
+        var videoPlayer = document.getElementById('videoPlayer');
+        videoPlayer.src = ""; // Stop the video when the modal is closed
+        document.getElementById('videoModal').classList.add('hidden');
+    }
+</script>
+{% endblock content %}

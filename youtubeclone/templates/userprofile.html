@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+<div class="max-w-md mx-auto my-10 p-8 bg-white shadow-lg rounded-lg">
+    {% if request.user.is_authenticated %}
+    <h2 class="text-2xl font-bold mb-4">Welcome, {{ request.user.username }}!</h2>
+    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded mt-4">Logout</button>
+    </form>
+    {% else %}
+    <h2 class="text-2xl font-bold mb-4">Login</h2>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded">Login</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock content %}

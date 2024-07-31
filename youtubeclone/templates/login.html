@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="max-w-md w-full bg-white shadow-lg rounded-lg p-8 md:p-12">
+        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Login</h2>
+        <form method="post" action="{% url 'login' %}" class="space-y-6">
+            {% csrf_token %}
+            <div class="flex flex-col space-y-4">
+                <!-- Username Field -->
+                <div>
+                    <label for="id_username" class="block text-gray-700 text-sm font-semibold mb-1">Username</label>
+                    {{ form.username }}
+                </div>
+
+                <!-- Password Field -->
+                <div>
+                    <label for="id_password" class="block text-gray-700 text-sm font-semibold mb-1">Password</label>
+                    {{ form.password }}
+                </div>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white py-3 px-4 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition ease-in-out duration-150">Login</button>
+        </form>
+        <div class="mt-6 text-center">
+            <p class="text-gray-600">Don't have an account? <a href="{% url 'signup' %}" class="text-blue-500 hover:underline font-semibold">Sign up</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title" required>
+
+    <label for="description">Description:</label>
+    <textarea name="description" id="description" required></textarea>
+
+    <label for="video">Upload Video:</label>
+    <input type="file" name="video" id="video" accept="video/*" required>
+
+    <button type="submit">Upload Video</button>
+</form>
